@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dev_iot/monitor.dart';
+import 'package:dev_iot/about_us.dart';
 
 void main() {
   runApp(MyApp());
@@ -32,6 +33,9 @@ class _MyHomePageState extends State<MyHomePage> {
   static Widget app = Center(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Image.asset('images/plantime.png', height: 150),
+      ],
     ),
   );
 
@@ -44,6 +48,9 @@ class _MyHomePageState extends State<MyHomePage> {
         app = Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Image.asset('images/plantime.png', height: 150),
+            ],
           ),
         );
       });
@@ -52,6 +59,10 @@ class _MyHomePageState extends State<MyHomePage> {
           setState(() {
             app = Monitor();
           });
+      } else {
+        setState(() {
+          app = AboutUs();
+        });
       }
     }
   }
@@ -73,6 +84,10 @@ class _MyHomePageState extends State<MyHomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.image),
             label: 'Monitor',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.info),
+            label: 'Sobre Nós',
           ),
         ],
         currentIndex: _selectedIndex,
