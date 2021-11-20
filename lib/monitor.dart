@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'dart:convert';
 
 class Monitor extends StatefulWidget {
@@ -12,10 +11,12 @@ class Monitor extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<Monitor> {
-  final getChannel = http.get(Uri.parse('https://api.thingspeak.com/channels/1562782/feeds.json?api_key=VTRITCIT2IUZWGJD&results=2'));
-  final DateFormat formatter = DateFormat('dd/MM/yyyy');
-  var channel = '';
+  final token = '';
+  final getChannel = (token) => http.get(Uri.parse('https://api.thingspeak.com/channels/$token/feeds.json?results=1'));
   var lastUpdate = ' - ';
+  var moisture = ' - '; // field1
+  var flowRate = ' - '; // field2
+  var temperature = ' - '; // field3
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +36,7 @@ class _MyHomePageState extends State<Monitor> {
                     Row(
                       children: <Widget>[
                         Icon(Icons.more_time),
-                        Text('23º C')
+                        Text('$temperatureº C')
                       ],
                     )
                   ],
@@ -61,7 +62,7 @@ class _MyHomePageState extends State<Monitor> {
                     Row(
                       children: <Widget>[
                         Icon(Icons.more_time),
-                        Text('28.5%')
+                        Text('$moisture%')
                       ],
                     )
                   ],
@@ -81,7 +82,7 @@ class _MyHomePageState extends State<Monitor> {
                     Row(
                       children: <Widget>[
                         Icon(Icons.more_time),
-                        Text('150 mL')
+                        Text('$flowRate L')
                       ],
                     )
                   ],
@@ -103,11 +104,13 @@ class _MyHomePageState extends State<Monitor> {
             Text('Última atualização em: $lastUpdate.'),
             ElevatedButton(
                 onPressed: () => {
-                  getChannel.then((response) => {
+                  getChannel(token).then((response) => {
                     if (response.statusCode == 200) {
                       setState(() {
-                        var data = jsonDecode(response.body)['feeds'].last;
-                        channel = '$data';
+                        var data = jsonDecode(response.body)['feeds'][0];
+                        moisture = data['field1'] != null ? '${data['field1']}' : ' - ';
+                        flowRate = data['field2'] != null ? '${data['field2']}' : ' - ';
+                        temperature = data['field3'] != null ? '${data['field3']}' : ' - ';
                         lastUpdate = '${
                             data['created_at'].substring(8, 10)
                         }/${
