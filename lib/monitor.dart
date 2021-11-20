@@ -19,12 +19,7 @@ class _MyHomePageState extends State<Monitor> {
   var temperature = ' - '; // field3
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        backgroundColor: Colors.lightGreen,
-      ),
-      body: SingleChildScrollView(
+    return SingleChildScrollView(
     child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -132,7 +127,6 @@ class _MyHomePageState extends State<Monitor> {
             ),
           ]
         )
-      ))
-    );
+      ));
   }
 }

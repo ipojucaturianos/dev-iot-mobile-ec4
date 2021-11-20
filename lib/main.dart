@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Plantime'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -27,6 +28,34 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _selectedIndex = 0;
+  static Widget app = Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+    ),
+  );
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    if (index == 0) {
+      setState(() {
+        app = Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+          ),
+        );
+      });
+    } else {
+        if (index == 1) {
+          setState(() {
+            app = Monitor();
+          });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,18 +63,22 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         backgroundColor: Colors.lightGreen,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Monitor()),
-                ),
-                child: Text('Monitor'))
-          ],
-        ),
+      body: app,
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Início',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.image),
+            label: 'Monitor',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
+        unselectedItemColor: Colors.grey,
       ),
     );
   }
