@@ -35,6 +35,10 @@ class _MyHomePageState extends State<MyHomePage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Image.asset('images/plantime.png', height: 150),
+        Padding(
+          padding: EdgeInsets.all(20),
+          child: Text('Bem-vindo!', style: TextStyle(fontSize: 20),)
+        ),
       ],
     ),
   );
@@ -50,6 +54,10 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Image.asset('images/plantime.png', height: 150),
+              Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Text('Bem-vindo!', style: TextStyle(fontSize: 20),)
+              ),
             ],
           ),
         );
