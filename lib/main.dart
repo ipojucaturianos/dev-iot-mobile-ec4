@@ -1,4 +1,5 @@
 import 'package:dev_iot/calculate.dart';
+import 'package:dev_iot/description.dart';
 import 'package:flutter/material.dart';
 import 'package:dev_iot/sensor.dart';
 import 'package:dev_iot/about_us.dart';
@@ -74,9 +75,15 @@ class _MyHomePageState extends State<MyHomePage> {
               app = Calculate();
             });
           } else {
-            setState(() {
-              app = AboutUs();
-            });
+            if (index == 3) {
+              setState(() {
+                app = Description();
+              });
+            } else {
+              setState(() {
+                app = AboutUs();
+              });
+            }
           }
       }
     }
@@ -106,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.description),
-            label: 'Descição',
+            label: 'Descrição',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.info),

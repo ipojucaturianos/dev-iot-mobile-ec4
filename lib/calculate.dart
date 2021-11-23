@@ -19,6 +19,7 @@ class _MyHomePageState extends State<Calculate> {
   var lastDate = new DateTime.now();
   var afterDate = new DateTime.now();
   var interval = ' - ';
+  var _status = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,24 @@ class _MyHomePageState extends State<Calculate> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.asset('images/planta.jpg', height: 120),
+            AnimatedContainer(
+              duration: Duration(seconds: 1),
+              color: _status ? Colors.black26 : Colors.black,
+              padding: EdgeInsets.only(bottom: _status ? 60 : 0, top: 20),
+              alignment: _status ? Alignment.bottomCenter : Alignment.topCenter,
+              child: AnimatedOpacity(
+                duration: Duration(seconds: 1),
+                opacity: _status ? 1 : 0 ,
+                child: Container(
+                  height: 40,
+                  child: Icon(
+                    Icons.wb_incandescent,
+                    size: 50,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
             const Divider(
               height: 10,
               thickness: 5,
@@ -76,6 +94,7 @@ class _MyHomePageState extends State<Calculate> {
                 onPressed: () => {
                   setState(() {
                     loaded = true;
+                    _status = !_status;
                   }),
                   getChannel(token).then((response) => {
                     if (response.statusCode == 200) {
