@@ -105,6 +105,10 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Indicadores',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.description),
+            label: 'Descição',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.info),
             label: 'Sobre Nós',
           ),
