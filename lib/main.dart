@@ -1,5 +1,6 @@
+import 'package:dev_iot/calculate.dart';
 import 'package:flutter/material.dart';
-import 'package:dev_iot/monitor.dart';
+import 'package:dev_iot/sensor.dart';
 import 'package:dev_iot/about_us.dart';
 
 void main() {
@@ -68,9 +69,15 @@ class _MyHomePageState extends State<MyHomePage> {
             app = Monitor();
           });
       } else {
-        setState(() {
-          app = AboutUs();
-        });
+          if (index == 2) {
+            setState(() {
+              app = Calculate();
+            });
+          } else {
+            setState(() {
+              app = AboutUs();
+            });
+          }
       }
     }
   }
@@ -91,7 +98,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.image),
-            label: 'Monitor',
+            label: 'Sensores',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.ad_units),
+            label: 'Indicadores',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.info),

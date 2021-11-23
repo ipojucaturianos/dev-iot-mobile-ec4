@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:intl/intl.dart';
 
-class Monitor extends StatefulWidget {
-  Monitor({Key? key}) : super(key: key);
+class Calculate extends StatefulWidget {
+  Calculate({Key? key}) : super(key: key);
   final String title = 'Monitor';
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<Monitor> {
+class _MyHomePageState extends State<Calculate> {
   var loaded = false;
   final token = '';
   final getChannel = (token) => http.get(Uri.parse('https://api.thingspeak.com/channels/$token/feeds.json?results=2'));
   var lastUpdate = ' - ';
-  var moisture = ' - '; // field1
   var flowRate = ' - '; // field2
-  var temperature = ' - '; // field3
   var lastDate = new DateTime.now();
   var afterDate = new DateTime.now();
-  var interval = 0;
+  var interval = ' - ';
 
   @override
   Widget build(BuildContext context) {
@@ -36,44 +33,6 @@ class _MyHomePageState extends State<Monitor> {
               thickness: 5,
               indent: 20,
               endIndent: 20,
-            ),
-            Card(
-                child: Padding(
-                    padding: EdgeInsets.only(top: 5, bottom: 5),
-                    child: Column(
-                      children: <Widget>[
-                        Text('Temperatura'),
-                        Row(
-                          children: <Widget>[
-                            Icon(Icons.wb_sunny_sharp),
-                            Padding(
-                                padding: EdgeInsets.only(left: 10),
-                                child: Text('$temperatureº C')
-                            ),
-                          ],
-                        )
-                      ],
-                    )
-                )
-            ),
-            Card(
-                child: Padding(
-                  padding: EdgeInsets.only(top: 5, bottom: 5),
-                  child: Column(
-                    children: <Widget>[
-                      Text('Umidade do solo'),
-                      Row(
-                        children: <Widget>[
-                          Icon(Icons.wb_cloudy),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text('$moisture%')
-                          ),
-                        ],
-                      )
-                    ],
-                  )
-                )
             ),
             Card(
                 child: Padding(
@@ -123,9 +82,7 @@ class _MyHomePageState extends State<Monitor> {
                       setState(() {
                         var data = jsonDecode(response.body)['feeds'][1];
                         var data2 = jsonDecode(response.body)['feeds'][0];
-                        moisture = data['field1'] != null ? '${data['field1']}' : ' - ';
                         flowRate = data['field2'] != null ? '${data['field2']}' : ' - ';
-                        temperature = data['field3'] != null ? '${data['field3']}' : ' - ';
                         afterDate = new DateTime.utc(
                           int.parse(data2['created_at'].substring(0, 4)),
                           int.parse(data2['created_at'].substring(5, 7)),
@@ -155,7 +112,7 @@ class _MyHomePageState extends State<Monitor> {
                         }min${
                             data['created_at'].substring(17, 19)
                         }';
-                        interval = lastDate.difference(afterDate).inMinutes;
+                        interval = '${lastDate.difference(afterDate).inMinutes}';
                       })
                     }
                   })
