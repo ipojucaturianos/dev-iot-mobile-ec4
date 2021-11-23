@@ -80,7 +80,7 @@ class _MyHomePageState extends State<Monitor> {
                   padding: EdgeInsets.only(top: 5, bottom: 5),
                   child: Column(
                     children: <Widget>[
-                      Text('Água utilizada'),
+                      Text('Água dispersada'),
                       Row(
                         children: <Widget>[
                           Icon(Icons.water),
